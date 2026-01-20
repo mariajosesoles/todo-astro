@@ -8,6 +8,7 @@ import {
 
 export function useTasks() {
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,7 +21,7 @@ export function useTasks() {
       setLoading(true);
       const data = await getTasks();
       setTasks(data);
-    } catch (err) {
+    } catch {
       setError("Error al cargar tareas");
     } finally {
       setLoading(false);
@@ -28,42 +29,38 @@ export function useTasks() {
   };
 
   const addTask = async (title) => {
-    try {
-      const newTask = await createTask({
-        title,
-        completed: false,
-      });
-      setTasks((prev) => [...prev, newTask]);
-    } catch {
-      setError("Error al crear la tarea");
-    }
+    const newTask = await createTask({
+      title,
+      completed: false,
+    });
+    setTasks((prev) => [...prev, newTask]);
   };
 
   const toggleTask = async (task) => {
-    try {
-      const updated = await updateTask(task.id, {
-        completed: !task.completed,
-      });
+    const updated = await updateTask(task.id, {
+      completed: !task.completed,
+    });
 
-      setTasks((prev) =>
-        prev.map((t) => (t.id === updated.id ? updated : t))
-      );
-    } catch {
-      setError("Error al actualizar la tarea");
-    }
+    setTasks((prev) =>
+      prev.map((t) => (t.id === updated.id ? updated : t))
+    );
   };
 
   const removeTask = async (id) => {
-    try {
-      await deleteTask(id);
-      setTasks((prev) => prev.filter((t) => t.id !== id));
-    } catch {
-      setError("Error al eliminar la tarea");
-    }
+    await deleteTask(id);
+    setTasks((prev) => prev.filter((t) => t.id !== id));
   };
 
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === "completed") return task.completed;
+    if (filter === "pending") return !task.completed;
+    return true;
+  });
+
   return {
-    tasks,
+    tasks: filteredTasks,
+    filter,
+    setFilter,
     loading,
     error,
     addTask,
