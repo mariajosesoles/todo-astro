@@ -29,27 +29,81 @@ export function useTasks() {
   };
 
   const addTask = async (title) => {
-    const newTask = await createTask({
+  const tempId = `temp-${Date.now()}`;
+
+  const optimisticTask = {
+    id: tempId,
+    title,
+    completed: false,
+    optimistic: true,
+  };
+
+  setTasks((prev) => [...prev, optimisticTask]);
+
+  try {
+    const saved = await createTask({
       title,
       completed: false,
     });
-    setTasks((prev) => [...prev, newTask]);
-  };
-
-  const toggleTask = async (task) => {
-    const updated = await updateTask(task.id, {
-      completed: !task.completed,
-    });
 
     setTasks((prev) =>
-      prev.map((t) => (t.id === updated.id ? updated : t))
+      prev.map((t) => (t.id === tempId ? saved : t))
     );
-  };
+  } catch {
+    setError("Error al crear la tarea");
+    setTasks((prev) => prev.filter((t) => t.id !== tempId));
+  }
+};
 
-  const removeTask = async (id) => {
+
+  const toggleTask = async (task) => {
+  const prevCompleted = task.completed;
+
+  setTasks((prev) =>
+    prev.map((t) =>
+      t.id === task.id
+        ? { ...t, completed: !t.completed }
+        : t
+    )
+  );
+
+  try {
+    await updateTask(task.id, {
+      completed: !prevCompleted,
+    });
+  } catch {
+    setError("Error al actualizar la tarea");
+
+    // rollback
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === task.id
+          ? { ...t, completed: prevCompleted }
+          : t
+      )
+    );
+  }
+};
+
+
+const removeTask = async (id) => {
+  let removed;
+
+  setTasks((prev) => {
+    removed = prev.find((t) => t.id === id);
+    return prev.filter((t) => t.id !== id);
+  });
+
+  try {
     await deleteTask(id);
-    setTasks((prev) => prev.filter((t) => t.id !== id));
-  };
+  } catch {
+    setError("Error al eliminar la tarea");
+
+    // rollback
+    setTasks((prev) => [...prev, removed]);
+  }
+};
+
 
   const filteredTasks = tasks.filter((task) => {
     if (filter === "completed") return task.completed;
