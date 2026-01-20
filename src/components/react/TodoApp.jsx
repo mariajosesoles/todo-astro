@@ -2,6 +2,7 @@ import { useTasks } from "../../hooks/useTasks";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import TodoFilters from "./TodoFilter";
+import TaskCounter from "./TaskCounter";
 
 export default function TodoApp() {
   const {
@@ -10,6 +11,9 @@ export default function TodoApp() {
     setFilter,
     loading,
     error,
+    totalTasks,
+    pendingTasks,
+    completedTasks,
     addTask,
     toggleTask,
     removeTask,
@@ -20,6 +24,11 @@ export default function TodoApp() {
 
   return (
     <>
+      <TaskCounter 
+        total={totalTasks}
+        pending={pendingTasks}
+        completed={completedTasks}      
+      />
       <TodoForm onAdd={addTask} />
       <TodoFilters filter={filter} onChange={setFilter} />
       <TodoList
