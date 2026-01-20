@@ -1,6 +1,9 @@
 export default function TodoItem({ todo, onToggle, onDelete }) {
   return (
-    <li className="flex items-center justify-between bg-slate-50 border rounded-lg px-3 py-2">
+<li
+  className={`flex items-center justify-between border rounded-lg px-3 py-2
+  ${todo.optimistic ? "opacity-60" : ""}`}
+>
       <span
         onClick={() => onToggle(todo)}
         className={`cursor-pointer ${
