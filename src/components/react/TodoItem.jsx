@@ -1,0 +1,23 @@
+export default function TodoItem({ todo, onToggle, onDelete }) {
+  return (
+    <li className="flex items-center justify-between bg-slate-50 border rounded-lg px-3 py-2">
+      <span
+        onClick={() => onToggle(todo)}
+        className={`cursor-pointer ${
+          todo.completed
+            ? "line-through text-gray-400"
+            : ""
+        }`}
+      >
+        {todo.title}
+      </span>
+
+      <button
+        onClick={() => onDelete(todo.id)}
+        className="text-red-500 hover:text-red-700"
+      >
+        ✕
+      </button>
+    </li>
+  );
+}
