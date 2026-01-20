@@ -57,12 +57,19 @@ export function useTasks() {
     return true;
   });
 
+  const totalTasks = tasks.length;
+  const pendingTasks = tasks.filter(t => !t.completed).length;
+  const completedTasks = tasks.filter(t => t.completed).length;
+  
   return {
     tasks: filteredTasks,
     filter,
     setFilter,
     loading,
     error,
+    totalTasks,
+    pendingTasks,
+    completedTasks,
     addTask,
     toggleTask,
     removeTask,
