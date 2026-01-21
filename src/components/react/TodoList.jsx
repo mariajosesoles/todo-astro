@@ -3,21 +3,15 @@ import TodoItem from "./TodoItem";
 export default function TodoList({ todos, onToggle, onDelete }) {
   if (!todos.length) {
     return (
-      <p className="text-center text-gray-400">
-        No hay tareas todavía
-      </p>
+      <div className="rounded-lg border border-dashed p-6 text-center text-slate-500">
+        No hay tareas. ¡Agrega la primera!
+      </div>
     );
   }
-
   return (
     <ul className="space-y-2">
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          onToggle={onToggle}
-          onDelete={onDelete}
-        />
+      {todos.map(t => (
+        <TodoItem key={t.id} todo={t} onToggle={onToggle} onDelete={onDelete} />
       ))}
     </ul>
   );

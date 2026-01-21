@@ -1,8 +1,7 @@
 ---
-const { title = "To-Do App" } = Astro.props;
 import "../styles/global.css";
+const { title = "To-Do App" } = Astro.props;
 ---
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -10,8 +9,8 @@ import "../styles/global.css";
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
   </head>
-  <body class="bg-slate-100 text-slate-800">
-    <main class="min-h-screen flex items-center justify-center">
+  <body class="min-h-screen bg-slate-100">
+    <main class="mx-auto flex min-h-screen max-w-lg items-center px-4">
       <slot />
     </main>
   </body>

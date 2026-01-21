@@ -1,41 +1,24 @@
 import { useTasks } from "../../hooks/useTasks";
 import TodoForm from "./TodoForm";
-import TodoList from "./TodoList";
 import TodoFilters from "./TodoFilter";
+import TodoList from "./TodoList";
 import TaskCounter from "./TaskCounter";
 
 export default function TodoApp() {
   const {
-    tasks,
-    filter,
-    setFilter,
-    loading,
-    error,
-    totalTasks,
-    pendingTasks,
-    completedTasks,
-    addTask,
-    toggleTask,
-    removeTask,
+    tasks, filter, setFilter, loading,
+    total, pending, completed,
+    addTask, toggleTask, removeTask,
   } = useTasks();
 
-  if (loading) return <p>Cargando tareas...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p className="text-center text-slate-500">Cargando…</p>;
 
   return (
     <>
-      <TaskCounter 
-        total={totalTasks}
-        pending={pendingTasks}
-        completed={completedTasks}      
-      />
+      <TaskCounter total={total} pending={pending} completed={completed} />
       <TodoForm onAdd={addTask} />
       <TodoFilters filter={filter} onChange={setFilter} />
-      <TodoList
-        todos={tasks}
-        onToggle={toggleTask}
-        onDelete={removeTask}
-      />
+      <TodoList todos={tasks} onToggle={toggleTask} onDelete={removeTask} />
     </>
   );
 }

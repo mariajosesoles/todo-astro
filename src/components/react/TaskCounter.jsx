@@ -1,21 +1,10 @@
-export default function TaskCounter({
-  total,
-  pending,
-  completed,
-}) {
+export default function TaskCounter({ total, pending, completed }) {
   return (
-    <div className="flex justify-between items-center mb-4 text-sm">
-      <span className="text-slate-600">
-        Total: <strong>{total}</strong>
-      </span>
-
+    <div className="mb-4 flex items-center justify-between text-sm">
+      <span className="text-slate-600">Total: <strong>{total}</strong></span>
       <div className="flex gap-2">
-        <span className="px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">
-          Pendientes: {pending}
-        </span>
-        <span className="px-2 py-1 rounded-full bg-green-100 text-green-700">
-          Completadas: {completed}
-        </span>
+        <span className="rounded-full bg-yellow-100 px-2 py-1 text-yellow-700">Pendientes {pending}</span>
+        <span className="rounded-full bg-green-100 px-2 py-1 text-green-700">Hechas {completed}</span>
       </div>
     </div>
   );

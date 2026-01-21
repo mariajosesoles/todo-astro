@@ -1,38 +1,20 @@
 export default function TodoFilters({ filter, onChange }) {
-  const base =
-    "px-3 py-1 rounded-lg text-sm border transition";
-
+  const base = "rounded-lg border px-4 py-2 text-sm transition";
   const active = "bg-blue-600 text-white";
-  const inactive = "bg-white text-slate-600 hover:bg-slate-100";
+  const idle = "bg-white text-slate-600 hover:bg-slate-100";
 
   return (
-    <div className="flex gap-2 justify-center mb-4">
-      <button
-        className={`${base} ${
-          filter === "all" ? active : inactive
-        }`}
-        onClick={() => onChange("all")}
-      >
-        Todas
-      </button>
-
-      <button
-        className={`${base} ${
-          filter === "pending" ? active : inactive
-        }`}
-        onClick={() => onChange("pending")}
-      >
-        Pendientes
-      </button>
-
-      <button
-        className={`${base} ${
-          filter === "completed" ? active : inactive
-        }`}
-        onClick={() => onChange("completed")}
-      >
-        Completadas
-      </button>
+    <div className="mb-4 flex flex-wrap items-center justify-center gap-3">
+      {["all","pending","completed"].map(k => (
+        <button
+          key={k}
+          type="button"
+          className={`${base} ${filter === k ? active : idle}`}
+          onClick={() => onChange(k)}
+        >
+          {k === "all" ? "Todas" : k === "pending" ? "Pendientes" : "Completadas"}
+        </button>
+      ))}
     </div>
   );
 }
