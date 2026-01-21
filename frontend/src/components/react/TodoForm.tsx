@@ -1,11 +1,16 @@
 import { useState } from "react";
 
-export default function TodoForm({ onAdd }) {
+type Props = {
+  onAdd: (title: string) => void;
+};
+
+export default function TodoForm({ onAdd }: Props) {
   const [text, setText] = useState("");
 
-  const submit = (e) => {
+  function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!text.trim()) return;
+    
     onAdd(text.trim());
     setText("");
   };
@@ -27,3 +32,4 @@ export default function TodoForm({ onAdd }) {
     </form>
   );
 }
+

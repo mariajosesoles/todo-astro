@@ -5,7 +5,11 @@ const app = createApp({
     port: 3000
   },
   plugins: {
-    swagger: true
+    swagger: true,
+    cors: {
+      origin: ["http://localhost:4321"],
+      methods: ["GET", "POST", "PATCH", "DELETE"]
+    }
   }
 });
 
