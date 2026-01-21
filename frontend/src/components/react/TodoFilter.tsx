@@ -1,8 +1,7 @@
-type Filter = "all" | "pending" | "completed";
-
+import type { TaskFilter } from "../../types/filter";
 type Props = {
-  filter: Filter;
-  onChange: (filter: Filter) => void;
+  filter: TaskFilter;
+  onChange: (filter: TaskFilter) => void;
 };
 
 export default function TodoFilters({ filter, onChange }: Props) {
@@ -12,7 +11,7 @@ export default function TodoFilters({ filter, onChange }: Props) {
 
   return (
     <div className="mb-4 flex flex-wrap items-center justify-center gap-3">
-      {(["all", "pending", "completed"] as Filter[]).map(k => (
+      {(["all", "pending", "completed"] as TaskFilter[]).map(k => (
         <button
           key={k}
           type="button"
