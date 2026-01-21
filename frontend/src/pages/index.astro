@@ -1,0 +1,10 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import TodoApp from "../components/react/TodoApp.jsx";
+---
+<BaseLayout title="To-Do App">
+  <section class="w-full rounded-2xl bg-white p-6 shadow-lg">
+    <h1 class="mb-6 text-center text-2xl font-semibold">To-Do App</h1>
+    <TodoApp client:load />
+  </section>
+</BaseLayout>

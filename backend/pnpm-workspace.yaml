@@ -1,0 +1,3 @@
+overrides:
+  cli: link:C:/Users/majo/AppData/Local/pnpm/global/5/node_modules/@boilrjs/cli
+  core: link:C:/Users/majo/AppData/Local/pnpm/global/5/node_modules/@boilrjs/core
